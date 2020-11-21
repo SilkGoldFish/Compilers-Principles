@@ -1,7 +1,0 @@
-program a;
-begin
-	if a=b 
-	then c:=a+b
-	else c:=a*b;
-	read(a)
-end

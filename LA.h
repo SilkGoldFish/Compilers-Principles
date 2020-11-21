@@ -14,7 +14,7 @@ unordered_map<string, int> Const;
 vector<string> RW = { " ","program","const","var","procedure","begin","end","if",
 					  "then","else","while","do","call","read","write","odd" };       //15 identifier
 
-fstream file("source1.txt", ios::in);
+fstream file("source.txt", ios::in);
 
 int row = 0, col = 0;        //row index and col index
 
@@ -24,7 +24,17 @@ void GetChar(char& ch) {
 }
 
 void GetBC(char& ch) {
-	while (ch == ' ') {
+	while (ch == ' ' || ch == '\n' || ch == '\t') {
+		if (ch == ' ') {
+			//
+		}
+		else if (ch == '\n') {
+			col = 0;
+			++row;
+		}
+		else if (ch == '\t') {
+			row += 7;
+		}
 		GetChar(ch);
 	}
 }
@@ -174,17 +184,8 @@ void Advance(string& Sym) {
 	else if (ch == ',') {
 		Sym = ",";
 	}
-	else if (ch == '\n') {
-		row++;
-		col = 0;
-		Advance(Sym);
-	}
-	else if (ch == '\t') {
-		col += 8;
-		Advance(Sym);
-	}
 	else if (ch == -1) {
-		//Do Nothing ^ ^
+		exit(0);
 	}
 	else {
 		while (ch < 0) {
