@@ -5,18 +5,34 @@
 #include<fstream>
 #include<string>
 #include<vector>
+#define RW_NUM 16
 using namespace std;
 
 unordered_map<string, int> Id;
 
 unordered_map<string, int> Const;
 
-vector<string> RW = { " ","program","const","var","procedure","begin","end","if",
+const string RW[16] = { " ","program","const","var","procedure","begin","end","if",
 					  "then","else","while","do","call","read","write","odd" };       //15 identifier
 
 fstream file("source.txt", ios::in);
 
 int row = 0, col = 0;        //row index and col index
+
+void GetChar(char& ch);
+void GetBC(char& ch);
+void Concat(string& Sym, const char& ch);
+bool IsLetter(const char& ch);
+bool IsDigit(const char& ch);
+int Reserve(const string& Sym);
+void Retract(char& ch);
+void InsertId(const string& Sym);
+void InsertConst(const string& Sym);
+void LexicalError(int mode, const string& Sym);
+void Advance(string& Sym);
+void Back(string& Sym);
+void SetPrintColorWhite();
+void SetPrintColorRed();
 
 void GetChar(char& ch) {
 	ch = file.get();
@@ -33,7 +49,7 @@ void GetBC(char& ch) {
 			++row;
 		}
 		else if (ch == '\t') {
-			row += 7;
+			col += 7;
 		}
 		GetChar(ch);
 	}
@@ -62,7 +78,7 @@ bool IsDigit(const char& ch) {
 }
 
 int Reserve(const string& Sym) {
-	for (int i = 0; i < RW.size(); i++) {
+	for (int i = 0; i < RW_NUM; i++) {
 		if (Sym == RW[i]) {
 			return i;
 		}
@@ -85,13 +101,13 @@ void InsertConst(const string& Sym) {
 }
 
 void LexicalError(int mode, const string& Sym) {
-	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_RED);
+	SetPrintColorRed();
 	switch (mode) {
-	case 1:cout << "YOU'VE FORGOTTEN TO INPUT A '=' AFTER ':' AT ROW:" << row << " COL:" << col - 1 << endl; break;
-	case 2:cout << "YOU'VE INPUT AN ILLEGAL WORD AT ROW:" << row << " COL:" << col - Sym.size() << endl; break;
-	case 3:cout << "YOU'VE INPUT A WRONG WORD(STARTS WITH DIGITS) AT ROW:" << row << " COL:" << col - Sym.size() << endl;
+	case 1:cout << "[LEXICAL ERROR]  YOU'VE FORGOTTEN TO INPUT A '=' AFTER ':' AT ROW:" << row << " COL:" << col << endl; break;
+	case 2:cout << "[LEXICAL ERROR]  YOU'VE INPUT AN ILLEGAL WORD AT ROW:" << row << " COL:" << col - Sym.size() << endl; break;
+	case 3:cout << "[LEXICAL ERROR]  YOU'VE INPUT A WRONG WORD(STARTS WITH DIGITS) AT ROW:" << row << " COL:" << col - Sym.size() << endl;
 	}
-	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE);
+	SetPrintColorWhite();
 }
 
 void Advance(string& Sym) {
@@ -121,10 +137,13 @@ void Advance(string& Sym) {
 				GetChar(ch);
 			}
 			Retract(ch);
+			InsertId(Sym);
 			LexicalError(3, Sym);	//YOU'VE INPUT A WRONG WORD(STARTS WITH DIGITS)
 		}
-		Retract(ch);
-		InsertConst(Sym);
+		else {
+			Retract(ch);
+			InsertConst(Sym);
+		}
 	}
 	else if (ch == ':') {
 		GetChar(ch);
@@ -194,10 +213,23 @@ void Advance(string& Sym) {
 		}
 		Retract(ch);
 		LexicalError(2, Sym);	//YOU'VE INPUT AN ILLEGAL WORD
+		Advance(Sym);
 	}
 }
 
 void Back(string& Sym) {
 	file.clear();
 	file.seekg(-(int)Sym.size(), ios::cur);
+}
+
+void SetPrintColorWhite() {
+	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE);
+}
+
+void SetPrintColorRed() {
+	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_RED);
+}
+
+void TestLA() {	//function for testing LA
+
 }
