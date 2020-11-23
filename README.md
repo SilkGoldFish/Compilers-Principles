@@ -11,18 +11,18 @@ The pl/0 language is as follows, described in Backus-Naur form:
 &lt;proc&gt;->procedure&lt;id&gt;([&lt;id&gt;{,&lt;id&gt;}]);&lt;block&gt;{;&lt;proc&gt;}<br>
 &lt;body&gt;->begin&lt;statement&gt;{;&lt;statement&gt;}end<br>
 &lt;statement&gt;->&lt;id&gt;:=&lt;exp&gt;<br>
-|if&lt;lexp&gt;then&lt;statement&gt;[else&lt;statement&gt;]<br>
-|while&lt;lexp&gt;do&lt;statement&gt;<br>
-|call&lt;id&gt;([&lt;exp&gt;{,&lt;exp&gt;}])<br>
-|&lt;body&gt;<br>
-|read(&lt;id&gt;{,&lt;id&gt;})<br>
-|write(&lt;exp&gt;{,&lt;exp&gt;})<br>
+  |if&lt;lexp&gt;then&lt;statement&gt;[else&lt;statement&gt;]<br>
+  |while&lt;lexp&gt;do&lt;statement&gt;<br>
+  |call&lt;id&gt;([&lt;exp&gt;{,&lt;exp&gt;}])<br>
+  |&lt;body&gt;<br>
+  |read(&lt;id&gt;{,&lt;id&gt;})<br>
+  |write(&lt;exp&gt;{,&lt;exp&gt;})<br>
 &lt;lexp&gt;->&lt;exp&gt;&lt;lop&gt;&lt;exp&gt;|odd&lt;exp&gt;<br>
 &lt;exp&gt;->[+|-]&lt;term&gt;{&lt;aop&gt;&lt;term&gt;}<br>
 &lt;term&gt;->&lt;factor&gt;{&lt;mop&gt;&lt;factor&gt;}<br>
 &lt;factor&gt;->&lt;id&gt;|&lt;integer&gt;|(&lt;exp&gt;)<br>
 &lt;lop&gt;->=|&lt;&gt;|&lt;|&lt;=|&gt;|&gt;=<br>
-&lt;aop&gt;->+|-&lt;<br>
-&lt;mop&gt;->*|/&lt;<br>
+&lt;aop&gt;->+|-<br>
+&lt;mop&gt;->*|/<br>
 &lt;id&gt;->l{l|d}<br>
 &lt;integer&gt;->d{d}<br>
