@@ -77,11 +77,11 @@ void _condecl(string& Sym) {	//<condecl> -> const <const>{,<const>};
 			cout << "condecl analyzation ends successfully" << endl;
 		}
 		else {
-			GrammarError(21,Sym);	//lacks of ';'
+			GrammarError(5, Sym);	//lacks of ';'
 		}
 	}
 	else {
-		//GrammarError();
+		GrammarError(4, Sym);	//unknown error
 	}
 }
 
@@ -95,15 +95,15 @@ void _const(string& Sym) {	//<const> -> <id>:=<integer>
 				cout << "const analyzation ends successfully" << endl;
 			}
 			else {
-				GrammarError(24,Sym);	//lacks of 'integer'
+				GrammarError(8, Sym);	//lacks of 'integer'
 			}
 		}
 		else {
-			GrammarError(23,Sym);	//lacks of ':='
+			GrammarError(7, Sym);	//lacks of ':='
 		}
 	}
 	else {
-		GrammarError(22,Sym);	//lacks of 'id'
+		GrammarError(6, Sym);	//lacks of 'id'
 	}
 }
 
@@ -119,22 +119,22 @@ void _vardecl(string& Sym) {	//<vardecl> -> var <id>{,<id>};
 					Advance(Sym);
 				}
 				else {
-					GrammarError(25,Sym);
+					GrammarError(9, Sym);
 				}
 			}
 			if (Sym == ";") {
 				cout << "vardecl analyzation ends successfully" << endl;
 			}
 			else {
-				GrammarError(26,Sym);
+				GrammarError(10, Sym);
 			}
 		}
 		else {
-			GrammarError(25,Sym);
+			GrammarError(9, Sym);
 		}
 	}
 	else {
-		//GrammarError();
+		GrammarError(4, Sym);	//unknown error
 	}
 }
 
@@ -154,7 +154,7 @@ void _proc(string& Sym) {	//<proc> -> procedure <id>（[<id>{,<id>}]）;<block>{
 							Advance(Sym);
 						}
 						else {
-							//GrammarError(30,Sym);	//lacks of 'id'
+							GrammarError(14, Sym);	//lacks of 'id'
 						}
 					}
 				}
@@ -173,23 +173,23 @@ void _proc(string& Sym) {	//<proc> -> procedure <id>（[<id>{,<id>}]）;<block>{
 						cout << "proc analyzation ends successfully" << endl;
 					}
 					else {
-						GrammarError(31,Sym);	//lacks of ';'
+						GrammarError(15, Sym);	//lacks of ';'
 					}
 				}
 				else {
-					GrammarError(29,Sym);	//lacks of ')'
+					GrammarError(13, Sym);	//lacks of ')'
 				}
 			}
 			else {
-				GrammarError(28,Sym);	//lacks of '('
+				GrammarError(12, Sym);	//lacks of '('
 			}
 		}
 		else {
-			GrammarError(27,Sym);	//lacks of 'id'
+			GrammarError(11, Sym);	//lacks of 'id'
 		}
 	}
 	else {
-		//GrammarError();
+		GrammarError(4, Sym);	//unknown error
 	}
 }
 
@@ -208,11 +208,11 @@ void _body(string& Sym) {  //<body> -> begin <statement>{;<statement>}end
 			cout << "body analyzation ends successfully" << endl;
 		}
 		else {
-			//GrammarError(5,Sym);	//lacks of 'end'
+			GrammarError(17, Sym);	//lacks of 'end'
 		}
 	}
 	else {
-		//GrammarError(4, Sym);	//lacks of 'begin'
+		GrammarError(16, Sym);	//lacks of 'begin' (only feasible in <body> included in <block>)
 	}
 }
 
@@ -226,7 +226,7 @@ void _statement(string& Sym) {
 			cout << "statement analyzation ends successfully" << endl;
 		}
 		else {
-			GrammarError(6,Sym);	//lacks of ':='
+			GrammarError(18, Sym);	//lacks of ':='
 		}
 	}
 	else if (Sym == "if") {		//<statement> -> if <lexp> then <statement>[else <statement>]
@@ -247,7 +247,7 @@ void _statement(string& Sym) {
 			cout << "statement analyzation ends successfully" << endl;
 		}
 		else {
-			//GrammarError(7, Sym);	//lacks of 'then' (not test)
+			GrammarError(19, Sym);	//lacks of 'then' 
 		}
 	}
 	else if (Sym == "while") {		//<statement> -> while <lexp> do <statement>
@@ -260,7 +260,7 @@ void _statement(string& Sym) {
 			cout << "statement analyzation ends successfully" << endl;
 		}
 		else {
-			//GrammarError(8,Sym);	//lacks of 'do'	(not test)
+			GrammarError(20, Sym);	//lacks of 'do'	
 		}
 	}
 	else if (Sym == "call") {		//<statement> -> call <id>（[<exp>{,<exp>}]）
@@ -282,15 +282,15 @@ void _statement(string& Sym) {
 					cout << "statement analyzation ends successfully" << endl;
 				}
 				else {
-					GrammarError(11,Sym);	//lacks of ')'
+					GrammarError(23, Sym);	//lacks of ')'
 				}
 			}
 			else {
-				GrammarError(10,Sym);	//lacks of '('
+				GrammarError(22, Sym);	//lacks of '('
 			}
 		}
 		else {
-			GrammarError(9,Sym);	//lacks of 'id'
+			GrammarError(21, Sym);	//lacks of 'id'
 		}
 	}
 	else if (Sym == "begin") {		//<statement> -> <body>
@@ -309,22 +309,22 @@ void _statement(string& Sym) {
 						Advance(Sym);
 					}
 					else {
-						GrammarError(13,Sym);	//lacks of 'id'
+						GrammarError(25, Sym);	//lacks of 'id'
 					}
 				}
 				if (Sym == ")") {
 					cout << "statement analyzation ends successfully" << endl;
 				}
 				else {
-					GrammarError(14,Sym);	//lacks of ')'
+					GrammarError(26, Sym);	//lacks of ')'
 				}
 			}
 			else {
-				GrammarError(13,Sym);	//lacks of 'id'
+				GrammarError(25, Sym);	//lacks of 'id'
 			}
 		}
 		else {
-			GrammarError(12,Sym);	//lacks of '('
+			GrammarError(24, Sym);	//lacks of '('
 		}
 	}
 	else if (Sym == "write") {		//<statement> -> write (<exp>{,<exp>})
@@ -342,15 +342,15 @@ void _statement(string& Sym) {
 				cout << "statement analyzation ends successfully" << endl;
 			}
 			else {
-				//GrammarError(16,Sym);	//lacks of ')'
+				GrammarError(28, Sym);	//lacks of ')'
 			}
 		}
 		else {
-			GrammarError(15,Sym);	//lacks of '('
+			GrammarError(27, Sym);	//lacks of '('
 		}
 	}
 	else {
-		//GrammarError(17,Sym);	//
+		GrammarError(4, Sym);	//unknown error
 	}
 }
 
@@ -370,7 +370,7 @@ void _lexp(string& Sym) {	//<lexp> -> <exp> <lop> <exp>|odd <exp>
 			cout << "lexp analyzation ends successfully" << endl;
 		}
 		else {
-			//GrammarError(18,Sym);	//lacks of a 'lop'
+			GrammarError(29, Sym);	//lacks of a 'lop'
 		}
 	}
 }
@@ -417,11 +417,11 @@ void _factor(string& Sym) {
 			cout << "factor analyzation ends successfully" << endl;
 		}
 		else {
-			//GrammarError(20,Sym);	//lacks of ')'
+			GrammarError(30, Sym);	//lacks of ')'
 		}
 	}
 	else {
-		//GrammarError(19,Sym);	//lacks of '('
+		GrammarError(4, Sym);	//unknown error
 	}
 }
 
@@ -504,209 +504,22 @@ void GrammarError(int mode, string& Sym) {
 		}
 		break;
 	case 3:	//from <prog>
-		cout << "[GRAMMAR ERROR]  PROGRAM LACKS OF ';' AT ROW:" << row << " COL:" << col - Sym.size() << endl;
+		cout << "[GRAMMAR ERROR]  PROGRAM LACKS OF A ';' AT ROW:" << row << " COL:" << col - Sym.size() << endl;
 		SetPrintColorWhite();
 		_block(Sym);
 		cout << "prog analyzation ends successfully" << endl;
 		break;
-	case 4:	//from <body>
-		cout << "[GRAMMAR ERROR]  PROGRAM LACKS OF RW 'BEGIN' AT ROW:" << row << " COL:" << col - Sym.size() << endl;
+	case 4:	//unknown error
+		cout << "[GRAMMAR ERROR]  UNKNOWN ERROR AT ROW:" << row << " COL:" << col - Sym.size() << endl;
 		SetPrintColorWhite();
-		_statement(Sym);
-		Advance(Sym);
-		while (Sym == ";") {
-			Advance(Sym);
-			_statement(Sym);
-			Advance(Sym);
-		}
-		if (Sym == "end") {
-			cout << "body analyzation ends successfully" << endl;
-		}
-		else {
-			GrammarError(5,Sym);
-		}
+		exit(0);
 		break;
-	case 5:	//from <body>
-		cout << "[GRAMMAR ERROR]  PROGRAM LACKS OF RW 'END' AT ROW:" << row << " COL:" << col - Sym.size() << endl;
-		SetPrintColorWhite();
-		break;
-	case 6:	//from <statement>
-		cout << "[GRAMMAR ERROR]  PROGRAM LACKS OF ':=' AT ROW:" << row << " COL:" << col - Sym.size() << endl;
-		SetPrintColorWhite();
-		_exp(Sym);
-		cout << "statement analyzation ends successfully" << endl;
-		break;
-	case 7:	//from <statement>
-		cout << "[GRAMMAR ERROR]  PROGRAM LACKS OF RW 'THEN' AT ROW:" << row << " COL:" << col - Sym.size() << endl;
-		SetPrintColorWhite();
-		_statement(Sym);
-		Advance(Sym);
-		if (Sym == "else") {
-			Advance(Sym);
-			_statement(Sym);
-		}
-		else {
-			Back(Sym);
-		}
-		cout << "statement analyzation ends successfully" << endl;
-		break;
-	case 8:	//from <statement>
-		cout << "[GRAMMAR ERROR]  PROGRAM LACKS OF RW 'DO' AT ROW:" << row << " COL:" << col - Sym.size() << endl;
-		SetPrintColorWhite();
-		_statement(Sym);
-		cout << "statement analyzation ends successfully" << endl;
-		break;
-	case 9:	//from <statement>
-		cout << "[GRAMMAR ERROR]  PROGRAM LACKS OF AN ID AT ROW:" << row << " COL:" << col - Sym.size() << endl;
-		SetPrintColorWhite();
-		if (Sym == "(") {
-			Advance(Sym);
-			if (IsAop(Sym) || IsId(Sym) || IsInteger(Sym) || Sym == "(") {
-				_exp(Sym);
-				Advance(Sym);
-				while (Sym == ",") {
-					Advance(Sym);
-					_exp(Sym);
-					Advance(Sym);
-				}
-			}
-			if (Sym == ")") {
-				cout << "statement analyzation ends successfully" << endl;
-			}
-			else {
-				GrammarError(11, Sym);	//lacks of ')'
-			}
-		}
-		else {
-			GrammarError(10, Sym);	//lacks of '('
-		}
-		break;
-	case 10:	//from <statement>
-		cout << "[GRAMMAR ERROR]  PROGRAM LACKS OF '(' AT ROW:" << row << " COL:" << col - Sym.size() << endl;
-		SetPrintColorWhite();
-		if (IsAop(Sym) || IsId(Sym) || IsInteger(Sym) || Sym == "(") {
-			_exp(Sym);
-			Advance(Sym);
-			while (Sym == ",") {
-				Advance(Sym);
-				_exp(Sym);
-				Advance(Sym);
-			}
-		}
-		if (Sym == ")") {
-			cout << "statement analyzation ends successfully" << endl;
-		}
-		else {
-			GrammarError(11, Sym);	//lacks of ')'
-		}
-		break;
-	case 11:	//from <statement>
-		cout << "[GRAMMAR ERROR]  PROGRAM LACKS OF ')' AT ROW:" << row << " COL:" << col - Sym.size() << endl;
+	case 5:	//from <condecl>
+		cout << "[GRAMMAR ERROR]  PROGRAM LACKS OF A ';' AT ROW:" << row << " COL:" << col - Sym.size() << endl;
 		SetPrintColorWhite();
 		Back(Sym);
 		break;
-	case 12:	//from <statement>
-		cout << "[GRAMMAR ERROR]  PROGRAM LACKS OF '(' AT ROW:" << row << " COL:" << col - Sym.size() << endl;
-		SetPrintColorWhite();
-		if (IsId(Sym)) {
-			Advance(Sym);
-			while (Sym == ",") {
-				Advance(Sym);
-				if (IsId(Sym)) {
-					Advance(Sym);
-				}
-				else {
-					GrammarError(13, Sym);	//lacks of 'id'
-				}
-			}
-			if (Sym == ")") {
-				cout << "statement analyzation ends successfully" << endl;
-			}
-			else {
-				GrammarError(14, Sym);	//lacks of ')'
-			}
-		}
-		else {
-			GrammarError(13, Sym);	//lacks of 'id'
-		}
-		break;
-	case 13:	//from <statement>
-		cout << "[GRAMMAR ERROR]  PROGRAM LACKS OF AN ID AT ROW:" << row << " COL:" << col - Sym.size() << endl;
-		SetPrintColorWhite();
-		while (Sym == ",") {
-			Advance(Sym);
-			if (IsId(Sym)) {
-				Advance(Sym);
-			}
-			else {
-				GrammarError(13, Sym);	//lacks of 'id'
-			}
-		}
-		if (Sym == ")") {
-			cout << "statement analyzation ends successfully" << endl;
-		}
-		else {
-			GrammarError(14, Sym);	//lacks of ')'
-		}
-		break;
-	case 14:	//from <statement>
-		cout << "[GRAMMAR ERROR]  PROGRAM LACKS OF ')' AT ROW:" << row << " COL:" << col - Sym.size() << endl;
-		SetPrintColorWhite();
-		Back(Sym);
-		break;
-	case 15:	//from <statement>
-		cout << "[GRAMMAR ERROR]  PROGRAM LACKS OF '(' AT ROW:" << row << " COL:" << col - Sym.size() << endl;
-		SetPrintColorWhite();
-		_exp(Sym);
-		Advance(Sym);
-		while (Sym == ",") {
-			Advance(Sym);
-			_exp(Sym);
-			Advance(Sym);
-		}
-		if (Sym == ")") {
-			cout << "statement analyzation ends successfully" << endl;
-		}
-		else {
-			GrammarError(16, Sym);	//lacks of ')'
-		}
-		break;
-	case 16:	//from <statement>
-		cout << "[GRAMMAR ERROR]  PROGRAM LACKS OF ')' AT ROW:" << row << " COL:" << col - Sym.size() << endl;
-		SetPrintColorWhite();
-		Back(Sym);
-		break;
-	case 17:	//from <statement>
-		break;
-	case 18:	//from <lexp>
-		cout << "[GRAMMAR ERROR]  PROGRAM LACKS OF AN 'LOP' AT ROW:" << row << " COL:" << col - Sym.size() << endl;
-		SetPrintColorWhite();
-		_exp(Sym);
-		cout << "lexp analyzation ends successfully" << endl;
-		break;
-	case 19:	//from <factor>
-		cout << "[GRAMMAR ERROR]  PROGRAM LACKS OF '(' AT ROW:" << row << " COL:" << col - Sym.size() << endl;
-		SetPrintColorWhite();
-		_exp(Sym);
-		Advance(Sym);
-		if (Sym == ")") {
-			cout << "factor analyzation ends successfully" << endl;
-		}
-		else {
-			GrammarError(20, Sym);	//lacks of ')'
-		}
-		break;
-	case 20:	//from <factor>
-		cout << "[GRAMMAR ERROR]  PROGRAM LACKS OF ')' AT ROW:" << row << " COL:" << col - Sym.size() << endl;
-		SetPrintColorWhite();
-		Back(Sym);
-		break;
-	case 21:	//from <condecl>
-		cout << "[GRAMMAR ERROR]  PROGRAM LACKS OF ';' AT ROW:" << row << " COL:" << col - Sym.size() << endl;
-		SetPrintColorWhite();
-		Back(Sym);
-		break;
-	case 22:	///from <const>
+	case 6:	///from <const>
 		cout << "[GRAMMAR ERROR]  PROGRAM LACKS OF AN ID AT ROW:" << row << " COL:" << col - Sym.size() << endl;
 		SetPrintColorWhite();
 		if (Sym == ":=") {
@@ -715,29 +528,29 @@ void GrammarError(int mode, string& Sym) {
 				cout << "const analyzation ends successfully" << endl;
 			}
 			else {
-				GrammarError(24, Sym);	//lacks of 'integer'
+				GrammarError(8, Sym);	//lacks of 'integer'
 			}
 		}
 		else {
-			GrammarError(23, Sym);	//lacks of ':='
+			GrammarError(7, Sym);	//lacks of ':='
 		}
 		break;
-	case 23:	//from <const>
-		cout << "[GRAMMAR ERROR]  PROGRAM LACKS OF ':=' AT ROW:" << row << " COL:" << col - Sym.size() << endl;
+	case 7:	//from <const>
+		cout << "[GRAMMAR ERROR]  PROGRAM LACKS OF A ':=' AT ROW:" << row << " COL:" << col - Sym.size() << endl;
 		SetPrintColorWhite();
 		if (IsInteger(Sym)) {
 			cout << "const analyzation ends successfully" << endl;
 		}
 		else {
-			GrammarError(24, Sym);	//lacks of 'integer'
+			GrammarError(8, Sym);	//lacks of 'integer'
 		}
 		break;
-	case 24:	//from <const>
+	case 8:	//from <const>
 		cout << "[GRAMMAR ERROR]  PROGRAM LACKS OF AN INTEGER AT ROW:" << row << " COL:" << col - Sym.size() << endl;
 		SetPrintColorWhite();
 		Back(Sym);
 		break;
-	case 25:	//from <vardecl>
+	case 9:	//from <vardecl>
 		cout << "[GRAMMAR ERROR]  PROGRAM LACKS OF AN ID AT ROW:" << row << " COL:" << col - Sym.size() << endl;
 		SetPrintColorWhite();
 		while (Sym == ",") {
@@ -746,22 +559,22 @@ void GrammarError(int mode, string& Sym) {
 				Advance(Sym);
 			}
 			else {
-				GrammarError(25, Sym);
+				GrammarError(9, Sym);
 			}
 		}
 		if (Sym == ";") {
 			cout << "vardecl analyzation ends successfully" << endl;
 		}
 		else {
-			GrammarError(26, Sym);
+			GrammarError(10, Sym);
 		}
 		break;
-	case 26:	//from <vardecl>
-		cout << "[GRAMMAR ERROR]  PROGRAM LACKS OF ';' AT ROW:" << row << " COL:" << col - Sym.size() << endl;
+	case 10:	//from <vardecl>
+		cout << "[GRAMMAR ERROR]  PROGRAM LACKS OF A ';' AT ROW:" << row << " COL:" << col - Sym.size() << endl;
 		SetPrintColorWhite();
 		Back(Sym);
 		break;
-	case 27:	//from <proc>
+	case 11:	//from <proc>
 		cout << "[GRAMMAR ERROR]  PROGRAM LACKS OF AN ID AT ROW:" << row << " COL:" << col - Sym.size() << endl;
 		SetPrintColorWhite();
 		if (Sym == "(") {
@@ -774,7 +587,7 @@ void GrammarError(int mode, string& Sym) {
 						Advance(Sym);
 					}
 					else {
-						GrammarError(30, Sym);	//lacks of 'id'
+						GrammarError(14, Sym);	//lacks of 'id'
 					}
 				}
 			}
@@ -793,19 +606,19 @@ void GrammarError(int mode, string& Sym) {
 					cout << "proc analyzation ends successfully" << endl;
 				}
 				else {
-					GrammarError(31, Sym);	//lacks of ';'
+					GrammarError(15, Sym);	//lacks of ';'
 				}
 			}
 			else {
-				GrammarError(29, Sym);	//lacks of ')'
+				GrammarError(13, Sym);	//lacks of ')'
 			}
 		}
 		else {
-			GrammarError(28, Sym);	//lacks of '('
+			GrammarError(12, Sym);	//lacks of '('
 		}
 		break;
-	case 28:	//from <proc>
-		cout << "[GRAMMAR ERROR]  PROGRAM LACKS OF '(' AT ROW:" << row << " COL:" << col - Sym.size() << endl;
+	case 12:	//from <proc>
+		cout << "[GRAMMAR ERROR]  PROGRAM LACKS OF A '(' AT ROW:" << row << " COL:" << col - Sym.size() << endl;
 		SetPrintColorWhite();
 		if (IsId(Sym)) {
 			Advance(Sym);
@@ -815,7 +628,7 @@ void GrammarError(int mode, string& Sym) {
 					Advance(Sym);
 				}
 				else {
-					GrammarError(30, Sym);	//lacks of 'id'
+					GrammarError(14, Sym);	//lacks of 'id'
 				}
 			}
 		}
@@ -834,15 +647,15 @@ void GrammarError(int mode, string& Sym) {
 				cout << "proc analyzation ends successfully" << endl;
 			}
 			else {
-				GrammarError(31, Sym);	//lacks of ';'
+				GrammarError(15, Sym);	//lacks of ';'
 			}
 		}
 		else {
-			GrammarError(29, Sym);	//lacks of ')'
+			GrammarError(13, Sym);	//lacks of ')'
 		}
 		break;
-	case 29:	//from <proc>
-		cout << "[GRAMMAR ERROR]  PROGRAM LACKS OF ')' AT ROW:" << row << " COL:" << col - Sym.size() << endl;
+	case 13:	//from <proc>
+		cout << "[GRAMMAR ERROR]  PROGRAM LACKS OF A ')' AT ROW:" << row << " COL:" << col - Sym.size() << endl;
 		SetPrintColorWhite();
 		if (Sym == ";") {
 			Advance(Sym);
@@ -857,10 +670,10 @@ void GrammarError(int mode, string& Sym) {
 			cout << "proc analyzation ends successfully" << endl;
 		}
 		else {
-			GrammarError(31, Sym);	//lacks of ';'
+			GrammarError(15, Sym);	//lacks of ';'
 		}
 		break;
-	case 30:	//from <proc>
+	case 14:	//from <proc>
 		cout << "[GRAMMAR ERROR]  PROGRAM LACKS OF AN ID AT ROW:" << row << " COL:" << col - Sym.size() << endl;
 		SetPrintColorWhite();
 		while (Sym == ",") {
@@ -869,33 +682,12 @@ void GrammarError(int mode, string& Sym) {
 				Advance(Sym);
 			}
 			else {
-				GrammarError(30, Sym);	//lacks of 'id'
+				GrammarError(14, Sym);	//lacks of 'id'
 			}
-		}
-		if (Sym == ")") {
-			Advance(Sym);
-			if (Sym == ";") {
-				Advance(Sym);
-				_block(Sym);
-				Advance(Sym);
-				while (Sym == ";") {
-					Advance(Sym);
-					_proc(Sym);
-					Advance(Sym);
-				}
-				Back(Sym);
-				cout << "proc analyzation ends successfully" << endl;
-			}
-			else {
-				GrammarError(31, Sym);	//lacks of ';'
-			}
-		}
-		else {
-			GrammarError(29, Sym);	//lacks of ')'
 		}
 		break;
-	case 31:	//from <proc>
-		cout << "[GRAMMAR ERROR]  PROGRAM LACKS OF ';' AT ROW:" << row << " COL:" << col - Sym.size() << endl;
+	case 15:	//from <proc>
+		cout << "[GRAMMAR ERROR]  PROGRAM LACKS OF A ';' AT ROW:" << row << " COL:" << col - Sym.size() << endl;
 		SetPrintColorWhite();
 		_block(Sym);
 		Advance(Sym);
@@ -906,6 +698,185 @@ void GrammarError(int mode, string& Sym) {
 		}
 		Back(Sym);
 		cout << "proc analyzation ends successfully" << endl;
+		break;
+	case 16:	//from <body>
+		cout << "[GRAMMAR ERROR]  PROGRAM LACKS OF RW 'BEGIN' AT ROW:" << row << " COL:" << col - Sym.size() << endl;
+		SetPrintColorWhite();
+		_statement(Sym);
+		Advance(Sym);
+		while (Sym == ";") {
+			Advance(Sym);
+			_statement(Sym);
+			Advance(Sym);
+		}
+		if (Sym == "end") {
+			cout << "body analyzation ends successfully" << endl;
+		}
+		else {
+			GrammarError(17, Sym);
+		}
+		break;
+	case 17:	//from <body>
+		cout << "[GRAMMAR ERROR]  PROGRAM LACKS OF RW 'END' AT ROW:" << row << " COL:" << col - Sym.size() << endl;
+		SetPrintColorWhite();
+		Back(Sym);
+		break;
+	case 18:	//from <statement>
+		cout << "[GRAMMAR ERROR]  PROGRAM LACKS OF A ':=' AT ROW:" << row << " COL:" << col - Sym.size() << endl;
+		SetPrintColorWhite();
+		_exp(Sym);
+		cout << "statement analyzation ends successfully" << endl;
+		break;
+	case 19:	//from <statement>
+		cout << "[GRAMMAR ERROR]  PROGRAM LACKS OF RW 'THEN' AT ROW:" << row << " COL:" << col - Sym.size() << endl;
+		SetPrintColorWhite();
+		_statement(Sym);
+		Advance(Sym);
+		if (Sym == "else") {
+			Advance(Sym);
+			_statement(Sym);
+		}
+		else {
+			Back(Sym);
+		}
+		cout << "statement analyzation ends successfully" << endl;
+		break;
+	case 20:	//from <statement>
+		cout << "[GRAMMAR ERROR]  PROGRAM LACKS OF RW 'DO' AT ROW:" << row << " COL:" << col - Sym.size() << endl;
+		SetPrintColorWhite();
+		_statement(Sym);
+		cout << "statement analyzation ends successfully" << endl;
+		break;
+	case 21:	//from <statement>
+		cout << "[GRAMMAR ERROR]  PROGRAM LACKS OF AN ID AT ROW:" << row << " COL:" << col - Sym.size() << endl;
+		SetPrintColorWhite();
+		if (Sym == "(") {
+			Advance(Sym);
+			if (IsAop(Sym) || IsId(Sym) || IsInteger(Sym) || Sym == "(") {
+				_exp(Sym);
+				Advance(Sym);
+				while (Sym == ",") {
+					Advance(Sym);
+					_exp(Sym);
+					Advance(Sym);
+				}
+			}
+			if (Sym == ")") {
+				cout << "statement analyzation ends successfully" << endl;
+			}
+			else {
+				GrammarError(23, Sym);	//lacks of ')'
+			}
+		}
+		else {
+			GrammarError(22, Sym);	//lacks of '('
+		}
+		break;
+	case 22:	//from <statement>
+		cout << "[GRAMMAR ERROR]  PROGRAM LACKS OF A '(' AT ROW:" << row << " COL:" << col - Sym.size() << endl;
+		SetPrintColorWhite();
+		if (IsAop(Sym) || IsId(Sym) || IsInteger(Sym) || Sym == "(") {
+			_exp(Sym);
+			Advance(Sym);
+			while (Sym == ",") {
+				Advance(Sym);
+				_exp(Sym);
+				Advance(Sym);
+			}
+		}
+		if (Sym == ")") {
+			cout << "statement analyzation ends successfully" << endl;
+		}
+		else {
+			GrammarError(23, Sym);	//lacks of ')'
+		}
+		break;
+	case 23:	//from <statement>
+		cout << "[GRAMMAR ERROR]  PROGRAM LACKS OF A ')' AT ROW:" << row << " COL:" << col - Sym.size() << endl;
+		SetPrintColorWhite();
+		Back(Sym);
+		break;
+	case 24:	//from <statement>
+		cout << "[GRAMMAR ERROR]  PROGRAM LACKS OF A '(' AT ROW:" << row << " COL:" << col - Sym.size() << endl;
+		SetPrintColorWhite();
+		if (IsId(Sym)) {
+			Advance(Sym);
+			while (Sym == ",") {
+				Advance(Sym);
+				if (IsId(Sym)) {
+					Advance(Sym);
+				}
+				else {
+					GrammarError(25, Sym);	//lacks of 'id'
+				}
+			}
+			if (Sym == ")") {
+				cout << "statement analyzation ends successfully" << endl;
+			}
+			else {
+				GrammarError(26, Sym);	//lacks of ')'
+			}
+		}
+		else {
+			GrammarError(25, Sym);	//lacks of 'id'
+		}
+		break;
+	case 25:	//from <statement>
+		cout << "[GRAMMAR ERROR]  PROGRAM LACKS OF AN ID AT ROW:" << row << " COL:" << col - Sym.size() << endl;
+		SetPrintColorWhite();
+		while (Sym == ",") {
+			Advance(Sym);
+			if (IsId(Sym)) {
+				Advance(Sym);
+			}
+			else {
+				GrammarError(25, Sym);	//lacks of 'id'
+			}
+		}
+		if (Sym == ")") {
+			cout << "statement analyzation ends successfully" << endl;
+		}
+		else {
+			GrammarError(26, Sym);	//lacks of ')'
+		}
+		break;
+	case 26:	//from <statement>
+		cout << "[GRAMMAR ERROR]  PROGRAM LACKS OF A ')' AT ROW:" << row << " COL:" << col - Sym.size() << endl;
+		SetPrintColorWhite();
+		Back(Sym);
+		break;
+	case 27:	//from <statement>
+		cout << "[GRAMMAR ERROR]  PROGRAM LACKS OF A '(' AT ROW:" << row << " COL:" << col - Sym.size() << endl;
+		SetPrintColorWhite();
+		_exp(Sym);
+		Advance(Sym);
+		while (Sym == ",") {
+			Advance(Sym);
+			_exp(Sym);
+			Advance(Sym);
+		}
+		if (Sym == ")") {
+			cout << "statement analyzation ends successfully" << endl;
+		}
+		else {
+			GrammarError(28, Sym);	//lacks of ')'
+		}
+		break;
+	case 28:	//from <statement>
+		cout << "[GRAMMAR ERROR]  PROGRAM LACKS OF A ')' AT ROW:" << row << " COL:" << col - Sym.size() << endl;
+		SetPrintColorWhite();
+		Back(Sym);
+		break;
+	case 29:	//from <lexp>
+		cout << "[GRAMMAR ERROR]  PROGRAM LACKS OF A 'LOP' AT ROW:" << row << " COL:" << col - Sym.size() << endl;
+		SetPrintColorWhite();
+		_exp(Sym);
+		cout << "lexp analyzation ends successfully" << endl;
+		break;
+	case 30:	//from <factor>
+		cout << "[GRAMMAR ERROR]  PROGRAM LACKS OF A ')' AT ROW:" << row << " COL:" << col - Sym.size() << endl;
+		SetPrintColorWhite();
+		Back(Sym);
 		break;
 	}
 }
