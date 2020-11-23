@@ -13,7 +13,7 @@ The pl/0 language is as follows, described in Backus-Naur form:
 &lt;statement&gt;->&lt;id&gt;:=&lt;exp&gt;<br>
 |if&lt;lexp&gt;then&lt;statement&gt;[else&lt;statement&gt;]<br>
 |while&lt;lexp&gt;do&lt;statement&gt;<br>
-|call&lt;id&gt;([&lt;exp&gt;{,&lt;exp&gt;}])<br>          
+|call&lt;id&gt;([&lt;exp&gt;{,&lt;exp&gt;}])<br>
 |&lt;body&gt;<br>
 |read(&lt;id&gt;{,&lt;id&gt;})<br>
 |write(&lt;exp&gt;{,&lt;exp&gt;})<br>
