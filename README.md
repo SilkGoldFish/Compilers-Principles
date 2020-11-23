@@ -5,7 +5,7 @@ The pl/0 language is as follows, described in Backus-Naur form:
 
 &lt;prog&gt;      -> program&lt;id&gt;;&lt;block&gt;<br>
 &lt;block&gt;     -> [&lt;condecl&gt;][&lt;vardecl&gt;][&lt;proc&gt;]&lt;body&gt;<br>
-&lt;condecl&gt;   -> const&lt;const&gt;{,&lt;const&gt;};&lt;br&gt;
+&lt;condecl&gt;   -> const&lt;const&gt;{,&lt;const&gt;};<br>
 &lt;const&gt;     -> &lt;id&gt;:=&lt;integer&gt;<br>
 &lt;vardecl&gt;   -> var&lt;id&gt;{,&lt;id&gt;};<br>
 &lt;proc&gt;      -> procedure&lt;id&gt;([&lt;id&gt;{,&lt;id&gt;}]);&lt;block&gt;{;&lt;proc&gt;}<br>
@@ -22,7 +22,7 @@ The pl/0 language is as follows, described in Backus-Naur form:
 &lt;term&gt;     -> &lt;factor&gt;{&lt;mop&gt;&lt;factor&gt;}<br>
 &lt;factor&gt;   -> &lt;id&gt;|&lt;integer&gt;|(&lt;exp&gt;)<br>
 &lt;lop&gt;      -> =|&lt;&gt;|&lt;|&lt;=|&gt;|&gt;=<br>
-&lt;aop&gt;      -> +|-&lt;br>
-&lt;mop&gt;      -> *|/&lt;br>
+&lt;aop&gt;      -> +|-&lt;<br>
+&lt;mop&gt;      -> *|/&lt;<br>
 &lt;id&gt;       -> l{l|d}<br>
 &lt;integer&gt;  -> d{d}<br>
