@@ -204,7 +204,7 @@ void Advance(string& Sym) {
 		Sym = ",";
 	}
 	else if (ch == -1) {
-		exit(0);
+		//exit(0);
 	}
 	else {
 		while (ch < 0) {
@@ -220,6 +220,7 @@ void Advance(string& Sym) {
 void Back(string& Sym) {
 	file.clear();
 	file.seekg(-(int)Sym.size(), ios::cur);
+	col -= Sym.size();
 }
 
 void SetPrintColorWhite() {
@@ -231,5 +232,9 @@ void SetPrintColorRed() {
 }
 
 void TestLA() {	//function for testing LA
-
+	string Sym;
+	while (true) {
+		Advance(Sym);
+		cout << Sym << endl;
+	}
 }
