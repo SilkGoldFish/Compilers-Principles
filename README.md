@@ -3,7 +3,7 @@ A repository for saving my own pl/0 language compiler
 
 The pl/0 language is as follows, described in Backus-Naur form:
 
-&lt prog &gt      -> program&ltid&gt;&ltblock&gt
+&lt;prog &gt      -> program&ltid&gt;&ltblock&gt
 &ltblock&gt     -> [&ltcondecl&gt][&ltvardecl&gt][&ltproc&gt]&ltbody&gt
 &ltcondecl&gt   -> const<const>{,<const>};
 &ltconst&gt     -> <id>:=<integer>
