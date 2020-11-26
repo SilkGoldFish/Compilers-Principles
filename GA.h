@@ -13,11 +13,11 @@ void _lexp(string& Sym);
 void _exp(string& Sym);
 void _term(string& Sym);
 void _factor(string& Sym);
-bool IsLop(const string& Sym);
-bool IsAop(const string& Sym);
-bool IsMop(const string& Sym);
-bool IsId(const string& Sym);
-bool IsInteger(const string& Sym);
+inline bool IsLop(const string& Sym);
+inline bool IsAop(const string& Sym);
+inline bool IsMop(const string& Sym);
+inline bool IsId(const string& Sym);
+inline bool IsInteger(const string& Sym);
 void GrammarError(int mode, string& Sym);
 
 void _prog(string& Sym) {	//<prog> -> program <id>;<block>
@@ -216,7 +216,7 @@ void _body(string& Sym) {  //<body> -> begin <statement>{;<statement>}end
 	}
 }
 
-void _statement(string& Sym) {
+void _statement(string& Sym) {	//the first word missing of each branch can't be detected
 	cout << "statement analyzation begins" << endl;
 	if (IsId(Sym)) {	//<statement> -> <id> := <exp>
 		Advance(Sym);
@@ -425,7 +425,7 @@ void _factor(string& Sym) {
 	}
 }
 
-bool IsLop(const string& Sym) {     //<lop> -> =|<>|<|<=|>|>=
+inline bool IsLop(const string& Sym) {     //<lop> -> =|<>|<|<=|>|>=
 	if (Sym == "=" || Sym == "<>" || Sym == "<" || Sym == "<=" || Sym == ">" || Sym == ">=") {
 		return true;
 	}
@@ -434,7 +434,7 @@ bool IsLop(const string& Sym) {     //<lop> -> =|<>|<|<=|>|>=
 	}
 }
 
-bool IsAop(const string& Sym) {     //<aop> -> +|-
+inline bool IsAop(const string& Sym) {     //<aop> -> +|-
 	if (Sym == "+" || Sym == "-") {
 		return true;
 	}
@@ -443,7 +443,7 @@ bool IsAop(const string& Sym) {     //<aop> -> +|-
 	}
 }
 
-bool IsMop(const string& Sym) {     //<mop> -> *|/
+inline bool IsMop(const string& Sym) {     //<mop> -> *|/
 	if (Sym == "*" || Sym == "/") {
 		return true;
 	}
@@ -452,7 +452,7 @@ bool IsMop(const string& Sym) {     //<mop> -> *|/
 	}
 }
 
-bool IsId(const string& Sym) {    //<id> -> l{l|d}
+inline bool IsId(const string& Sym) {    //<id> -> l{l|d}
 	if (Id.find(Sym) != Id.end()) {
 		return true;
 	}
@@ -461,7 +461,7 @@ bool IsId(const string& Sym) {    //<id> -> l{l|d}
 	}
 }
 
-bool IsInteger(const string& Sym) {     //<integer> -> d{d}
+inline bool IsInteger(const string& Sym) {     //<integer> -> d{d}
 	if (Const.find(Sym) != Const.end()) {
 		return true;
 	}
