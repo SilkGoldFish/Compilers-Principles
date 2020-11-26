@@ -19,22 +19,22 @@ fstream file("source.txt", ios::in);
 
 int row = 0, col = 0;        //row index and col index
 
-void GetChar(char& ch);
+inline void GetChar(char& ch);
 void GetBC(char& ch);
-void Concat(string& Sym, const char& ch);
-bool IsLetter(const char& ch);
-bool IsDigit(const char& ch);
+inline void Concat(string& Sym, const char& ch);
+inline bool IsLetter(const char& ch);
+inline bool IsDigit(const char& ch);
 int Reserve(const string& Sym);
-void Retract(char& ch);
-void InsertId(const string& Sym);
-void InsertConst(const string& Sym);
+inline void Retract(char& ch);
+inline void InsertId(const string& Sym);
+inline void InsertConst(const string& Sym);
 void LexicalError(int mode, const string& Sym);
 void Advance(string& Sym);
-void Back(string& Sym);
-void SetPrintColorWhite();
-void SetPrintColorRed();
+inline void Back(string& Sym);
+inline void SetPrintColorWhite();
+inline void SetPrintColorRed();
 
-void GetChar(char& ch) {
+inline void GetChar(char& ch) {
 	ch = file.get();
 	col++;
 }
@@ -55,11 +55,11 @@ void GetBC(char& ch) {
 	}
 }
 
-void Concat(string& Sym, const char& ch) {
+inline void Concat(string& Sym, const char& ch) {
 	Sym += ch;
 }
 
-bool IsLetter(const char& ch) {
+inline bool IsLetter(const char& ch) {
 	if ((ch >= 'a' && ch <= 'z') || (ch >= 'A' && ch <= 'Z')) {
 		return true;
 	}
@@ -68,7 +68,7 @@ bool IsLetter(const char& ch) {
 	}
 }
 
-bool IsDigit(const char& ch) {
+inline bool IsDigit(const char& ch) {
 	if (ch >= '0' && ch <= '9') {
 		return true;
 	}
@@ -86,17 +86,17 @@ int Reserve(const string& Sym) {
 	return 0;
 }
 
-void Retract(char& ch) {
+inline void Retract(char& ch) {
 	file.seekg(-1, ios::cur);
 	ch = ' ';
 	col--;
 }
 
-void InsertId(const string& Sym) {
+inline void InsertId(const string& Sym) {
 	Id.insert(pair<string, int>(Sym, Id.size()));
 }
 
-void InsertConst(const string& Sym) {
+inline void InsertConst(const string& Sym) {
 	Const.insert(pair<string, int>(Sym, Const.size()));
 }
 
@@ -217,17 +217,17 @@ void Advance(string& Sym) {
 	}
 }
 
-void Back(string& Sym) {
+inline void Back(string& Sym) {
 	file.clear();
 	file.seekg(-(int)Sym.size(), ios::cur);
 	col -= Sym.size();
 }
 
-void SetPrintColorWhite() {
+inline void SetPrintColorWhite() {
 	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE);
 }
 
-void SetPrintColorRed() {
+inline void SetPrintColorRed() {
 	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_RED);
 }
 
