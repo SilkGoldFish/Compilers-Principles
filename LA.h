@@ -204,7 +204,7 @@ void Advance(string& Sym) {
 		Sym = ",";
 	}
 	else if (ch == -1) {
-		//exit(0);
+		//exit(0);	(only used in LA test)
 	}
 	else {
 		while (ch < 0) {
