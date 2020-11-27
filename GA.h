@@ -119,18 +119,18 @@ void _vardecl(string& Sym) {	//<vardecl> -> var <id>{,<id>};
 					Advance(Sym);
 				}
 				else {
-					GrammarError(9, Sym);
+					GrammarError(9, Sym);	//lacks of 'id'
 				}
 			}
 			if (Sym == ";") {
 				cout << "vardecl analyzation ends successfully" << endl;
 			}
 			else {
-				GrammarError(10, Sym);
+				GrammarError(10, Sym);	//lacks of ';'
 			}
 		}
 		else {
-			GrammarError(9, Sym);
+			GrammarError(9, Sym);	//lacks of 'id'
 		}
 	}
 	else {
@@ -208,7 +208,7 @@ void _body(string& Sym) {  //<body> -> begin <statement>{;<statement>}end
 			cout << "body analyzation ends successfully" << endl;
 		}
 		else {
-			GrammarError(17, Sym);	//lacks of 'end'
+			GrammarError(17, Sym);	//lacks of ';' || lacks of 'end'
 		}
 	}
 	else {
@@ -716,10 +716,29 @@ void GrammarError(int mode, string& Sym) {
 			GrammarError(17, Sym);
 		}
 		break;
-	case 17:	//from <body>
-		cout << "[GRAMMAR ERROR]  PROGRAM LACKS OF RW 'END' AT ROW:" << row << " COL:" << col - Sym.size() << endl;
-		SetPrintColorWhite();
-		Back(Sym);
+	case 17:	//from <body>	can not solve the case of two continuous begin-end in one <body> 
+		if (Sym == "begin") {
+			cout << "[GRAMMAR ERROR]  PROGRAM LACKS OF RW 'END' AT ROW:" << row << " COL:" << col - Sym.size() << endl;
+			SetPrintColorWhite();
+			Back(Sym);
+		}
+		else if (IsId(Sym) || Sym == "if" || Sym == "while" || Sym == "call" || Sym == "read" || Sym == "write") {
+			cout << "[GRAMMAR ERROR]  PROGRAM LACKS OF A ';' AT ROW:" << row << " COL:" << col - Sym.size() << endl;
+			SetPrintColorWhite();
+			_statement(Sym);
+			Advance(Sym);
+			while (Sym == ";") {
+				Advance(Sym);
+				_statement(Sym);
+				Advance(Sym);
+			}
+			if (Sym == "end") {
+				cout << "body analyzation ends successfully" << endl;
+			}
+			else {
+				GrammarError(17, Sym);	//lacks of ';' || lacks of 'end'
+			}
+		}
 		break;
 	case 18:	//from <statement>
 		cout << "[GRAMMAR ERROR]  PROGRAM LACKS OF A ':=' AT ROW:" << row << " COL:" << col - Sym.size() << endl;
