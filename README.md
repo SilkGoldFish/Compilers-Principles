@@ -1,9 +1,10 @@
 # Compilers-Principles
-A repository for saving my own pl/0 language compiler
+**A repository for saving my own pl/0 language compiler**
 
 **Important Notification:**<br>
 **Each line of the test file should end up with a blank character.(According to some unknown system errors)**<br>
 
+## Pl/0 language
 The pl/0 language is as follows, described in Backus-Naur form:
 
 &lt;prog&gt;->program&lt;id&gt;;&lt;block&gt;<br>
