@@ -1,5 +1,5 @@
 # Compilers-Principles
-**A repository for saving my own pl/0 language compiler**
+A repository for saving my own pl/0 language compiler
 
 **Important Notification:**<br>
 **Each line of the test file should end up with a blank character.(According to some unknown system errors)**<br>
@@ -30,3 +30,40 @@ The pl/0 language is as follows, described in Backus-Naur form:
 &lt;mop&gt;->*|/<br>
 &lt;id&gt;->l{l|d}<br>
 &lt;integer&gt;->d{d}<br>
+
+## Lexical Error
+1.YOU'VE FORGOTTEN TO INPUT A '=' AFTER ':'
+2.YOU'VE INPUT AN ILLEGAL WORD
+3.YOU'VE INPUT A WRONG WORD(STARTS WITH DIGITS)
+
+## Grammar Error
+1.RW 'PROGRAM' MISSES IN &lt;PROG&gt; ANALYZATION
+2.AN ID MISSES IN &lt;PROG&gt; ANALYZATION
+3.A ';' MISSES IN &lt;PROG&gt; ANALYZATION
+4.UNKNOWN ERROR
+5.A ';' MISSES IN &lt;CONDECL&gt; ANALYZATION
+6.AN ID MISSES IN &lt;CONST&gt; ANALYZATION
+7.A ':=' MISSES IN &lt;CONST&gt; ANALYZATION
+8.AN INTEGER MISSES IN &lt;CONST&gt; ANALYZATION
+9.AN ID MISSES IN &lt;VARDECL&gt; ANALYZATION
+10.A ';' MISSES IN &lt;VARDECL&gt; ANALYZATION
+11.AN ID MISSES IN &lt;PROC&gt; ANALYZATION
+12.A '(' MISSES IN &lt;PROC&gt; ANALYZATION
+13.A ')' MISSES IN &lt;PROC&gt; ANALYZATION
+14.AN ID MISSES IN &lt;PROC&gt; ANALYZATION
+15.A ';' MISSES IN &lt;PROC&gt; ANALYZATION
+16.RW 'BEGIN' MISSES IN &lt;BODY&gt; ANALYZATION
+17.RW 'END' OR A ';' MISSES IN &lt;BODY&gt; ANALYZATION
+18.A ':=' MISSES IN &lt;STATEMENT&gt; ANALYZATION
+19.RW 'THEN' MISSES IN &lt;STATEMENT&gt; ANALYZATION
+20.RW 'DO' MISSES IN &lt;STATEMENT&gt; ANALYZATION
+21.AN ID MISSES IN &lt;STATEMENT&gt; ANALYZATION
+22.A '(' MISSES IN &lt;STATEMENT&gt; ANALYZATION
+23.A ')' MISSES IN &lt;STATEMENT&gt; ANALYZATION
+24.A '(' MISSES IN &lt;STATEMENT&gt; ANALYZATION
+25.AN ID MISSES IN &lt;STATEMENT&gt; ANALYZATION
+26.A ')' MISSES IN &lt;STATEMENT&gt; ANALYZATION
+27.A '(' MISSES IN &lt;STATEMENT&gt; ANALYZATION
+28.A ')' MISSES IN &lt;STATEMENT&gt; ANALYZATION
+29.A 'LOP' MISSES IN &lt;LEXP&gt; ANALYZATION
+30.A ')' MISSES IN &lt;FACTOR&gt; ANALYZATION
