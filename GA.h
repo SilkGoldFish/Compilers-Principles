@@ -173,7 +173,6 @@ void _proc(string& Sym) {	//<proc> -> procedure <id>（[<id>{,<id>}]）;<block>{
 	}
 }
 
-
 void _body(string& Sym) {  //<body> -> begin <statement>{;<statement>}end
 	cout << "body analyzation begins" << endl;
 	if (IsString("begin", Sym)) {
