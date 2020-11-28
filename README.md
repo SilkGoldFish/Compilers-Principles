@@ -40,6 +40,8 @@ The pl/0 language is as follows, described in Backus-Naur form:
 1.ALL THE SPELLING ERROR OF RESERVED WORD EXCEPT 'ODD' CAN BE DETECTED<br>
 
 ## Grammar Error
+(Error inside **&lt;exp&gt;** can't be detected)<br>
+
 1.RW 'PROGRAM' MISSES IN **&lt;PROG&gt;** ANALYZATION<br>
 2.AN ID MISSES IN **&lt;PROG&gt;** ANALYZATION<br>
 3.A ';' MISSES IN **&lt;PROG&gt;** ANALYZATION<br>
