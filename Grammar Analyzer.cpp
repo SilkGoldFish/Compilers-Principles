@@ -5,5 +5,6 @@ int main() {
 	string Sym;
 	Advance(Sym);
 	_prog(Sym);
+	//TestLA();	//function for testing LA
 	file.close();
 }
