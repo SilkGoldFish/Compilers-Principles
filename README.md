@@ -37,7 +37,7 @@ The pl/0 language is as follows, described in Backus-Naur form:
 3.YOU'VE INPUT A WRONG WORD(STARTS WITH DIGITS)<br>
 
 ## Spell Error
-1.ALL the spelling error of reserved word except 'odd' can be detected<br>
+1.ALL THE SPELLING ERROR OF RESERVED WORD EXCEPT 'ODD' CAN BE DETECTED<br>
 
 ## Grammar Error
 1.RW 'PROGRAM' MISSES IN **&lt;PROG&gt;** ANALYZATION<br>
