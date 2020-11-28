@@ -33,6 +33,13 @@ void Advance(string& Sym);
 inline void Back(string& Sym);
 inline void SetPrintColorWhite();
 inline void SetPrintColorRed();
+inline bool IsLop(const string& Sym);
+inline bool IsAop(const string& Sym);
+inline bool IsMop(const string& Sym);
+inline bool IsId(const string& Sym);
+inline bool IsInteger(const string& Sym);
+inline bool IsContained(const string& Goal, const string& Sym);
+bool IsString(const string& Goal, const string& Sym);
 
 inline void GetChar(char& ch) {
 	ch = file.get();
@@ -204,7 +211,7 @@ void Advance(string& Sym) {
 		Sym = ",";
 	}
 	else if (ch == -1) {
-		//exit(0);	(only used in LA test)
+		exit(0);	//(only used in LA test)
 	}
 	else {
 		while (ch < 0) {
@@ -231,10 +238,122 @@ inline void SetPrintColorRed() {
 	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_RED);
 }
 
+inline bool IsLop(const string& Sym) {     //<lop> -> =|<>|<|<=|>|>=
+	if (Sym == "=" || Sym == "<>" || Sym == "<" || Sym == "<=" || Sym == ">" || Sym == ">=") {
+		return true;
+	}
+	else {
+		return false;
+	}
+}
+
+inline bool IsAop(const string& Sym) {     //<aop> -> +|-
+	if (Sym == "+" || Sym == "-") {
+		return true;
+	}
+	else {
+		return false;
+	}
+}
+
+inline bool IsMop(const string& Sym) {     //<mop> -> *|/
+	if (Sym == "*" || Sym == "/") {
+		return true;
+	}
+	else {
+		return false;
+	}
+}
+
+inline bool IsId(const string& Sym) {    //<id> -> l{l|d}
+	if (Id.find(Sym) != Id.end()) {
+		return true;
+	}
+	else {
+		return false;
+	}
+}
+
+inline bool IsInteger(const string& Sym) {     //<integer> -> d{d}
+	if (Const.find(Sym) != Const.end()) {
+		return true;
+	}
+	else {
+		return false;
+	}
+}
+
+inline bool IsContained(const string& Goal, const string& Sym) {
+	if (Goal.find(Sym) != string::npos) {
+		return true;
+	}
+	else {
+		return false;
+	}
+}
+
+bool IsString(const string& Goal, const string& Sym) {	//only can detect three cases
+	if (Goal == Sym) {	//completely the same or Sym is part of the Goal
+		return true;
+	}
+	else if (IsContained(Goal, Sym)) {
+		SetPrintColorRed();
+		cout << "[SPELL ERROR]  YOU'VE INPUT THE WRONG SPELLING OF '" << Goal << "' AT ROW:" << row << " COL:" << col - Sym.size() << endl;
+		SetPrintColorWhite();
+		return true;
+	}
+	else {	//Sym loses some letters from Goal or differs a letter
+		int i = 0, j = 0, k = 0, equal = 0;
+		while (i < Sym.size()) {
+			if (Sym[i] == Goal[j] || Sym[i] == Goal[j] + 32 || Sym[i] == Goal[j] - 32) {
+				++equal; ++i; ++j;
+			}
+			else {
+				for (k = j; k < Goal.size(); k++) {
+					if (Goal[k] == Sym[i]) {
+						break;
+					}
+				}
+				if (k < Goal.size()) {
+					j = k;
+				}
+				else {
+					if (i < Sym.size() - 1) {
+						++i;
+					}
+					else {
+						break;
+					}
+				}
+			}
+		}
+		if (equal >= Sym.size() - 1) {
+			SetPrintColorRed();
+			cout << "[SPELL ERROR]  YOU'VE INPUT THE WRONG SPELLING OF '" << Goal << "' AT ROW:" << row << " COL:" << col - Sym.size() << endl;
+			SetPrintColorWhite();
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+}
+
 void TestLA() {	//function for testing LA
 	string Sym;
 	while (true) {
 		Advance(Sym);
-		cout << Sym << endl;
+		string print = "<";
+		print += Sym + ",";
+		if (Id.find(Sym) != Id.end()) {
+			print += to_string(Id[Sym]) + ">";
+		}
+		else if (Const.find(Sym) != Const.end()) {
+			print += to_string(Const[Sym]) + ">";
+		}
+		else {
+			print += "->";
+		}
+		cout << print << endl;
 	}
 }
