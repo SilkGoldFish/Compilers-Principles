@@ -209,7 +209,7 @@ void _statement(string& Sym) {	//the first word missing of each branch can't be 
 			GrammarError(18, Sym);	//lacks of ':='
 		}
 	}
-	else if (IsString("if", Sym)) {		//<statement> -> if <lexp> then <statement>[else <statement>]
+	else if (Sym == "if") {		//<statement> -> if <lexp> then <statement>[else <statement>]
 		Advance(Sym);
 		_lexp(Sym);
 		Advance(Sym);
@@ -217,7 +217,7 @@ void _statement(string& Sym) {	//the first word missing of each branch can't be 
 			Advance(Sym);
 			_statement(Sym);
 			Advance(Sym);
-			if (IsString("else", Sym)) {
+			if (Sym == "else") {
 				Advance(Sym);
 				_statement(Sym);
 			}
@@ -230,7 +230,7 @@ void _statement(string& Sym) {	//the first word missing of each branch can't be 
 			GrammarError(19, Sym);	//lacks of 'then' 
 		}
 	}
-	else if (IsString("while", Sym)) {		//<statement> -> while <lexp> do <statement>
+	else if (Sym == "while") {		//<statement> -> while <lexp> do <statement>
 		Advance(Sym);
 		_lexp(Sym);
 		Advance(Sym);
@@ -243,7 +243,7 @@ void _statement(string& Sym) {	//the first word missing of each branch can't be 
 			GrammarError(20, Sym);	//lacks of 'do'	
 		}
 	}
-	else if (IsString("call", Sym)) {		//<statement> -> call <id>（[<exp>{,<exp>}]）
+	else if (Sym == "call") {		//<statement> -> call <id>（[<exp>{,<exp>}]）
 		Advance(Sym);
 		if (IsId(Sym)) {
 			Advance(Sym);
@@ -273,11 +273,11 @@ void _statement(string& Sym) {	//the first word missing of each branch can't be 
 			GrammarError(21, Sym);	//lacks of 'id'
 		}
 	}
-	else if (IsString("begin", Sym)) {		//<statement> -> <body>
+	else if (Sym == "begin") {		//<statement> -> <body>
 		_body(Sym);
 		cout << "statement analyzation ends successfully" << endl;
 	}
-	else if (IsString("read", Sym)) {		//<statement> -> read (<id>{，<id>})
+	else if (Sym == "read") {		//<statement> -> read (<id>{，<id>})
 		Advance(Sym);
 		if (Sym == "(") {
 			Advance(Sym);
@@ -307,7 +307,7 @@ void _statement(string& Sym) {	//the first word missing of each branch can't be 
 			GrammarError(24, Sym);	//lacks of '('
 		}
 	}
-	else if (IsString("write", Sym)) {		//<statement> -> write (<exp>{,<exp>})
+	else if (Sym == "write") {		//<statement> -> write (<exp>{,<exp>})
 		Advance(Sym);
 		if (Sym == "(") {
 			Advance(Sym);
@@ -657,7 +657,7 @@ void GrammarError(int mode, string& Sym) {
 			SetPrintColorWhite();
 			Back(Sym);
 		}
-		else if (IsId(Sym) || IsString("if", Sym) || IsString("while", Sym) || IsString("call", Sym) || IsString("read", Sym) || IsString("write", Sym)) {
+		else if (IsId(Sym) || Sym == "if" || Sym == "while" || Sym == "call" || Sym == "read" || Sym == "write") {
 			cout << "[GRAMMAR ERROR]  PROGRAM LACKS OF A ';' AT ROW:" << row << " COL:" << col - Sym.size() << endl;
 			SetPrintColorWhite();
 			_statement(Sym);
@@ -686,7 +686,7 @@ void GrammarError(int mode, string& Sym) {
 		SetPrintColorWhite();
 		_statement(Sym);
 		Advance(Sym);
-		if (IsString("else", Sym)) {
+		if (Sym == "else") {
 			Advance(Sym);
 			_statement(Sym);
 		}
